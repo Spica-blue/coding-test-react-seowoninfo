@@ -35,7 +35,7 @@ const BuggyCart: React.FC = () => {
     const itemToUpdate = items.find(item => item.id === itemId);
     if (itemToUpdate) {
       itemToUpdate.quantity += 1;
-      setItems(items);
+      setItems((prev) => [...prev]);
     }
   };
 
