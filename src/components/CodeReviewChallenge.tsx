@@ -54,13 +54,15 @@ const UserList = () => {
     });
   }, []);
 
-    // 필터링 로직
+  // 필터링 로직
+  // 코드 리뷰 : debounce를 사용하지 않고 검색어를 입력할때마다 필터링을 실행하고 있어서 불필요한 리소스 소비를 하고 있기 때문에 성능이 저하됩니다.
+  //            그렇기 때문에 debounce를 사용하여 일정 시간 동안 대기하다가, 그 시간 동안 다른 변경이 없으면 입력값에 대한 처리를 수행하게 해야합니다.
   const filteredUsers = users.filter(user => {
-      const nameMatches = user.name.includes(filter);
-      const emailMatches = user.email.includes(filter);
-      const adminMatches = !showAdminsOnly || user.isAdmin;
-      return (nameMatches || emailMatches) && adminMatches;
-    });
+    const nameMatches = user.name.includes(filter);
+    const emailMatches = user.email.includes(filter);
+    const adminMatches = !showAdminsOnly || user.isAdmin;
+    return (nameMatches || emailMatches) && adminMatches;
+  });
 
   return (
     <div className={styles.container}>
